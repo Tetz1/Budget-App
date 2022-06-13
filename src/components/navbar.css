@@ -1,0 +1,45 @@
+.nav {
+    color: black;
+    width: 100%;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    padding-left: 8.5%;
+}
+
+.nav li {
+    width: 20%;
+}
+
+.nav .navlink {
+    float: left;
+    color: black;
+    text-decoration: none;
+    font-size: 17px;
+    text-align: center;
+    background-color: white;
+}
+
+.icon {
+    font-size: 30px;
+}
+
+.nav .active .icon {
+    color: green;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav ul {
+        padding-left: 4%;
+    }
+
+    .icon {
+        font-size: 24px;
+    }
+
+    .nav .navlink {
+        font-size: 12px;
+    }
+}

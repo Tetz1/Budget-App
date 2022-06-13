@@ -1,0 +1,21 @@
+.logo {
+    text-align: left;
+    height: 50px;
+    position: relative;
+}
+
+.welcome {
+    position: relative;
+}
+
+.dateSelector {
+    position: relative;
+    height: 150px;
+    width: 100%;
+}
+
+.summaryMoney {
+    height: 100px;
+    position: relative;
+    justify-content: center;
+}

@@ -1,0 +1,32 @@
+.buttonGroup {
+    text-align: right;
+}
+
+button {
+    font-family: "Andale Mono", monospace;
+    padding: 13px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 25px;
+    margin-top: 50px;
+    border-radius: 15px;
+    border: 0px;
+    font-size: 20px;
+    background-color: white;
+}
+
+.buttonGroup {
+    text-align: center;
+}
+
+.active {
+    color: white;
+    background-color: green;
+}
+
+@media only screen and (max-width: 600px) {
+    .buttonGroup {
+        margin-right: 10px;
+        text-align: right;
+    }
+}

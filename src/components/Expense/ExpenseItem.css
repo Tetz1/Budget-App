@@ -1,0 +1,75 @@
+.containerExp {
+    display: grid;
+    grid-template-columns: 15% 15% 60% 10%;
+    width: 85%;
+    margin-top: 20px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.205);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cellExp {
+    display: block;
+    justify-items: stretch;
+    gap: 0px;
+    margin-bottom: 0px;
+}
+
+.description {
+    text-align: right;
+    width: 100%;
+    font-size: 12px;
+}
+
+.importancy {
+    text-align: center;
+    width: 100%;
+    font-size: 12px;
+    color: rgba(128, 128, 128, 0.842);
+    margin-top: 5px;
+}
+
+.amountExpense {
+    text-align: right;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.category_icon {
+    width: 100%;
+    font-size: 30px;
+}
+
+.dateItem {
+    width: 100%;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.dateMonth {
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.473);
+}
+
+.importancy_high {
+    color: red;
+}
+.importancy_med {
+    color: orange;
+}
+.importancy_low {
+    color: green;
+}
+
+.icon_food {
+    color: rgb(250, 170, 20);
+}
+.icon_bills {
+    color: rgb(81, 200, 255);
+}
+.icon_leisure {
+    color: rgb(179, 0, 179);
+}
+.icon_debts {
+    color: red;
+}

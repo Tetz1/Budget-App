@@ -1,0 +1,22 @@
+.navbar {
+    bottom: 0;
+    position: sticky;
+    background-color: white;
+    overflow: auto;
+}
+
+.content {
+    overflow: scroll;
+    width: 100%;
+}
+
+.cont {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-top: 50px;
+}
+
+#root {
+    height: 90vh;
+}
