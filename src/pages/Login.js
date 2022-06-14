@@ -1,27 +1,16 @@
-import { useState, ReactDOM } from 'react';
+import { useState } from 'react';
 
 import LoginRegisterNav from '../components/LoginRegisterNav';
 import "./loginRegister.css";
 
 const Login = () => {
 
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = (event) => {
-        event.preventDefault();
-        
-        /*
-        let logindata = {email, password};
-        let result = fetch("https://budgetapp.digitalcube.rs/api/tenants/__IDTENANT__/sessions?", {
-            method: "POST",
-            headers: {},
-            body: JSON.stringify(logindata)
-        });
-        result = result.json();
-        localStorage.setItem("user-info", JSON.stringify(result));
-        */
-    }
+    const handleLogin = async e => {
+        e.preventDefault();
+    };
 
     return (
         <div>
@@ -30,7 +19,7 @@ const Login = () => {
             <div className="info">Please log in to continue</div>
 
             <form onSubmit={handleLogin}>
-                <input className="login__input" type="text" placeholder="Email*" value={email} onChange={(e) => setEmail(e.target.value)} /><br/>
+                <input className="login__input" type="text" placeholder="Username*" value={username} onChange={(e) => setUsername(e.target.value)} /><br/>
                 <input className="login__input" type="password" placeholder="Password*" value={password} onChange={(e) => setPassword(e.target.value)} /><br/>
                 <div className="forgotPassword">
                     <a href="">Forgot password?</a>
@@ -43,6 +32,6 @@ const Login = () => {
             </div>
         </div>
     )
-  };
-  
-  export default Login;
+};
+
+export default Login;

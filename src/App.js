@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import LoginPage from './pages/Login';
@@ -12,6 +11,14 @@ import Income from './pages/Income';
 import AddIncome from './pages/AddIncome';
 
 import './App.css';
+
+/*
+Category ID's:
+Bills - 7224a0c0-3d7c-42b4-817a-aa8bfc210ae0
+Food - 6d98d71e-0809-4dda-9d41-7a208de7c9ee
+Leisure - 476a72bb-0ccc-4721-b0e6-14087f0358f7
+Debts - a0fec36b-b872-4a0b-a88b-c5e1e822f740
+*/
 
 
 const dummyExpenses = [
@@ -43,7 +50,7 @@ const dummyExpenses = [
         id: 4,
         date: new Date(2022, 5, 5),
         category: "Debts",
-        amount: 50,
+        amount: 2500,
         description: "Car loan",
         importancy: "High"
     }
@@ -54,23 +61,23 @@ const dummyIncomes = [
         id: 1,
         date: new Date(2022, 5, 5),
         description: "Salary",
-        amount: 50
+        amount: 5000
     },
     {
         id: 2,
-        date: new Date(2022, 5, 5),
+        date: new Date(2022, 3, 5),
         description: "Salary",
         amount: 5000
     },
     {
         id: 3,
-        date: new Date(2022, 5, 5),
+        date: new Date(2022, 4, 5),
         description: "Salary",
         amount: 3333
     },
     {
         id: 4,
-        date: new Date(2022, 5, 5),
+        date: new Date(2022, 4, 5),
         description: "Salary",
         amount: 69420
     }
@@ -80,8 +87,6 @@ const App = () => {
 
     const [expenses, setExpenses] = useState(dummyExpenses);
     const [incomes, setIncomes] = useState(dummyIncomes);
-    const [totalExpenses, setTotalExpenses] = useState(0);
-    const [totalIncomes, setTotalIncomes] = useState(0);
 
     const saveExpenseDataHandler = (expense) => {
         setExpenses((prevExpenses) => {
@@ -95,10 +100,6 @@ const App = () => {
         });
     };
 
-    const getTotalExpensesHandler = (totalExpense) => {
-        setTotalExpenses(totalExpense);
-    };
-
     return (
         <BrowserRouter>
             <Routes>
@@ -107,7 +108,7 @@ const App = () => {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/home" element={
                         <>
-                        <Home totalExpenses={totalExpenses} />
+                        <Home expenses={expenses} incomes={incomes} />
                         <Navbar />
                         </>
                     } />
@@ -121,7 +122,6 @@ const App = () => {
                         <>
                         <Expenses
                             expenses={expenses}
-                            getTotalExpenses={getTotalExpensesHandler}
                         />
                         <Navbar />
                         </>

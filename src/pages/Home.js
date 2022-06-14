@@ -9,20 +9,41 @@ import './home.css';
 
 function Home(props) {
 
-    const [totalExpenses, setTotalExpenses] = useState(0);
+    const expenses = props.expenses;
+    const incomes = props.incomes;
 
-    const filteredMonthHandler = (filteredMonth) => {
-        console.log(filteredMonth);
-        totalExpensesHandler();
+    const currMonth = new Date().toLocaleString("en-US", { month: "long" });
+    const [filteredMonth, setFilteredMonth] = useState(currMonth);
+
+    const filteredMonthHandler = (month) => {
+        setFilteredMonth(month);
     };
 
-    const totalExpensesHandler = () => {
-        setTotalExpenses(props.totalExpenses);
-        console.log(totalExpenses);
-    };
+
+    // To get the total expenses
+    const filteredExpenses = expenses.filter(expense => (
+        expense.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
+    ));
+    
+    let totalExpenses = 0;
+    filteredExpenses.map((expense) => (
+        totalExpenses += parseFloat(expense.amount)
+    ));
+
+
+    // To get the total incomes
+    const filteredIncomes = incomes.filter(income => (
+        income.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
+    ));
+    
+    let totalIncomes = 0;
+    filteredIncomes.map((income) => (
+        totalIncomes += parseFloat(income.amount)
+    ));
+
 
     return (
-        <div>
+        <>
             <div className="logo">
                 <img src="" alt="Logo" />
             </div>
@@ -33,12 +54,10 @@ function Home(props) {
                 <DateSelector onFilteredMonth={filteredMonthHandler} />
             </div>
             <div className="summaryMoney">
-                <SummaryMoney totalExpenses={props.totalExpenses} />
+                <SummaryMoney totalExpenses={totalExpenses.toFixed(2)} totalIncomes={totalIncomes.toFixed(2)} />
             </div>
-            <div>
-                <CircleProgressbar />
-            </div>
-        </div>
+            <CircleProgressbar totalIncomes={totalIncomes} totalExpenses={totalExpenses} />
+        </>
     );
 }
 

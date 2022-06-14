@@ -1,23 +1,17 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import './AddIncome.css';
 
 const AddIncome = (props) => {
 
-    const [enteredAmount, setEnteredAmount] = useState("");
-    const [enteredDescription, setEnteredDescription] = useState("");
-
-    const amountChangeHandler = (event) => {
-        setEnteredAmount(event.target.value);
-    };
-
-    const descriptionChangeHandler = (event) => {
-        setEnteredDescription(event.target.value);
-    };
+    const amountInputRef = useRef();
+    const descriptionInputRef = useRef();
 
     const submitHandler = (event) => {
         event.preventDefault();
+        const enteredAmount = amountInputRef.current.value;
+        const enteredDescription = descriptionInputRef.current.value;
         
         const incomeData = {
             id: Math.random(),
@@ -27,8 +21,8 @@ const AddIncome = (props) => {
         };
         props.onSaveIncomeData(incomeData);
 
-        setEnteredAmount("");
-        setEnteredDescription("");
+        amountInputRef.current.value = "";
+        descriptionInputRef.current.value = "";
     };
 
     return (
@@ -45,8 +39,18 @@ const AddIncome = (props) => {
                 <div className="">Add incomes</div>
             </div>
             <form onSubmit={submitHandler}>
-                <input type="text" placeholder="Enter amount here" value={enteredAmount} onChange={amountChangeHandler} required /><br/>
-                <input type="text" placeholder="Enter description" value={enteredDescription} onChange={descriptionChangeHandler} required /><br/>
+                <input
+                    type="text" 
+                    placeholder="Enter amount here"
+                    ref={amountInputRef}
+                    required
+                /><br />
+                <input
+                    type="text"
+                    placeholder="Enter description"
+                    ref={descriptionInputRef}
+                    required
+                /><br />
                 <button type="submit">Add</button>
             </form>
         </div>

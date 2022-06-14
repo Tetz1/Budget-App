@@ -6,13 +6,13 @@ import './TotalIncome.css';
 
 const TotalIncome = (props) => {
 
-    let totalIncomeAmount = props.totalIncomeAmount;
+    let totalIncomes = props.totalIncomes;
 
     return (
         <div className="card">
             <div className="box box1">
                 <div className="label">Income</div>
-                <div className="amount">${totalIncomeAmount}</div>
+                <div className="amount">€{totalIncomes}</div>
             </div>
             <div className="box"></div>
             <div className="box box2">

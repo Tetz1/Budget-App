@@ -8,17 +8,25 @@ import './Income.css';
 
 const Income = (props) => {
 
+    const incomes = props.incomes;
     const currMonth = new Date().toLocaleString("en-US", { month: "long" });
     const [filteredMonth, setFilteredMonth] = useState(currMonth);
+
+    const filteredIncomes = incomes.filter(income => (
+        income.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
+    ));
+
+
+    // Get total expenses
+    let totalIncomes = 0;
+    filteredIncomes.map((income) => (
+        totalIncomes += parseFloat(income.amount)
+    ));
+
 
     const filteredMonthHandler = (month) => {
         setFilteredMonth(month);
     };
- 
-    let totalIncomeAmount = 0;
-    props.incomes.map(incomes => (
-        totalIncomeAmount = totalIncomeAmount + incomes.amount
-    ));
 
     return (
         <div className="content">
@@ -26,7 +34,7 @@ const Income = (props) => {
                 <img src="" alt="Logo" />
             </div>
             <div className="cont">
-                <TotalIncome totalIncomeAmount={totalIncomeAmount} />
+                <TotalIncome totalIncomes={totalIncomes} />
                 <DateSelector onFilteredMonth={filteredMonthHandler} />
             </div>
             <IncomeHistory incomes={props.incomes} monthFilter={filteredMonth} />

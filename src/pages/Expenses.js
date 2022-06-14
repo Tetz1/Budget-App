@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import DateSelector from "../components/DateSelector";
 import ExpenseHistory from '../components/Expense/ExpenseHistory';
@@ -9,19 +8,26 @@ import './Expenses.css';
 
 const Expenses = (props) => {
 
+    const expenses = props.expenses;
     const currMonth = new Date().toLocaleString("en-US", { month: "long" });
     const [filteredMonth, setFilteredMonth] = useState(currMonth);
-    const [totalExpenses, setTotalExpenses] = useState(0);
+
+    const filteredExpenses = expenses.filter(expense => (
+        expense.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
+    ));
+
+
+    // Get total expenses
+    let totalExpenses = 0;
+    filteredExpenses.map((expense) => (
+        totalExpenses += parseFloat(expense.amount)
+    ));
+
 
     const filteredMonthHandler = (month) => {
         setFilteredMonth(month);
     };
 
-    const totalExpensesHandler = (getTotalExpenses) => {
-        setTotalExpenses(getTotalExpenses);
-        props.getTotalExpenses(totalExpenses);
-    };
-    
 
     return (
         <div className="content">
@@ -37,9 +43,8 @@ const Expenses = (props) => {
                 />
             </div>
             <ExpenseHistory
-                expenses={props.expenses}
+                expenses={expenses}
                 monthFilter={filteredMonth}
-                getTotalAmount={totalExpensesHandler}
             />
         </div>
     );

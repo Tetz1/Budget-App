@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import Slider from '@mui/material/Slider';
@@ -31,18 +31,11 @@ const AddExpenses = (props) => {
     };
 
     
-    const [enteredAmount, setEnteredAmount] = useState("");
-    const [enteredDescription, setEnteredDescription] = useState("");
+    const amountInputRef = useRef();
+    const descriptionInputRef = useRef();
+
     const [enteredCategory, setEnteredCategory] = useState("");
     const [enteredImportancy, setEnteredImportancy] = useState("Medium");
-
-    const amountChangeHandler = (event) => {
-        setEnteredAmount(event.target.value);
-    };
-
-    const descriptionChangeHandler = (event) => {
-        setEnteredDescription(event.target.value);
-    };
 
     const categoryChangeHandler = (event) => {
         setEnteredCategory(event.target.value);
@@ -68,6 +61,8 @@ const AddExpenses = (props) => {
 
     const submitHandler = (event) => {
         event.preventDefault();
+        const enteredAmount = amountInputRef.current.value;
+        const enteredDescription = descriptionInputRef.current.value;
 
         const expenseData = {
             id: Math.random(),
@@ -79,52 +74,69 @@ const AddExpenses = (props) => {
         };
 
         props.onSaveExpenseData(expenseData);
-        setEnteredAmount("");
-        setEnteredDescription("");
+        amountInputRef.current.value = "";
+        descriptionInputRef.current.value = "";
     };
     
 
     return (
         <div>
             <form onSubmit={submitHandler}>
-                <input type="number" placeholder="Enter amount here" min={0.01} step={0.01} value={enteredAmount} onChange={amountChangeHandler} required /><br/>
-                <input type="text" placeholder="Enter description" maxLength={75} value={enteredDescription} onChange={descriptionChangeHandler} required />
+                <input
+                    type="number"
+                    placeholder="Enter amount here"
+                    min={0.01}
+                    step={0.01}
+                    ref={amountInputRef}
+                    required
+                /><br/>
+                <input
+                    type="text"
+                    placeholder="Enter description"
+                    maxLength={75}
+                    ref={descriptionInputRef}
+                    required
+                />
                 <div>
-                    <b>Choose category</b>
+                    <div>
+                        <b>Choose category</b>
+                    </div>
+                    <div>
+                        <label for="food">Food</label>
+                        <input type="radio" id="food" name="category" value="Food" onChange={categoryChangeHandler} />
+                    </div>
+                    <div>
+                        <label for="bills">Bills</label>
+                        <input type="radio" id="bills" name="category" value="Bills" onChange={categoryChangeHandler} />
+                    </div>
+                    <div>
+                        <label for="leisure">Leisure</label>
+                        <input type="radio" id="leisure" name="category" value="Leisure" onChange={categoryChangeHandler} />
+                    </div>
+                    <div>
+                        <label for="debts">Debts</label>
+                        <input type="radio" id="debts" name="category" value="Debts" onChange={categoryChangeHandler} />
+                    </div>
                 </div>
                 <div>
-                    <label for="food">Food</label>
-                    <input type="radio" id="food" name="category" value="Food" onChange={categoryChangeHandler} />
-                </div>
-                <div>
-                    <label for="bills">Bills</label>
-                    <input type="radio" id="bills" name="category" value="Bills" onChange={categoryChangeHandler} />
-                </div>
-                <div>
-                    <label for="leisure">Leisure</label>
-                    <input type="radio" id="leisure" name="category" value="Leisure" onChange={categoryChangeHandler} />
-                </div>
-                <div>
-                    <label for="debts">Debts</label>
-                    <input type="radio" id="debts" name="category" value="Debts" onChange={categoryChangeHandler} />
-                </div>
-                <div>
-                    <b>Choose importance</b>
-                </div>
-                <div>
-                    <Slider
-                        aria-label="Restricted values"
-                        defaultValue={4}
-                        valueLabelFormat={valueLabelFormat}
-                        getAriaValueText={valuetext}
-                        step={null}
-                        valueLabelDisplay={marks.label}
-                        marks={marks}
-                        max={7}
-                        min={1}
-                        onChange={importancyChangeHandler}
-                        className="slider"
-                    />
+                    <div>
+                        <b>Choose importance</b>
+                    </div>
+                    <div>
+                        <Slider
+                            aria-label="Restricted values"
+                            defaultValue={4}
+                            valueLabelFormat={valueLabelFormat}
+                            getAriaValueText={valuetext}
+                            step={null}
+                            valueLabelDisplay={marks.label}
+                            marks={marks}
+                            max={7}
+                            min={1}
+                            onChange={importancyChangeHandler}
+                            className="slider"
+                        />
+                    </div>
                 </div>
                 <button className="btn" type="submit">Add</button>
             </form>
