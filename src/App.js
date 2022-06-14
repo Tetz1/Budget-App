@@ -106,7 +106,7 @@ const App = () => {
                 <Route>
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
-                    <Route path="/home" element={
+                    <Route path="/" element={
                         <>
                         <Home expenses={expenses} incomes={incomes} />
                         <Navbar />
