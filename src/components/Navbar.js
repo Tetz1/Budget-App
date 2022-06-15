@@ -13,7 +13,7 @@ const Navbar = () => {
         <nav className="nav navbar">
             <ul>
                 <li>
-                    <NavLink className="navlink" activeClassName="active" to="/home">
+                    <NavLink className="navlink" activeClassName="active" to="/">
                         <AiOutlineHome className="icon" /><br/>
                         Home
                     </NavLink>

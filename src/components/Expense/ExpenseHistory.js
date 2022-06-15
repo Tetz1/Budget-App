@@ -3,13 +3,11 @@ import { useState } from 'react';
 import ExpenseItem from './ExpenseItem';
 
 
-const ExpenseHistory = (props) => {
+const ExpenseHistory = ({expenses, monthFilter}) => {
 
-    const expenses = props.expenses;
-    const filteredMonth = props.monthFilter;
 
     const filteredExpenses = expenses.filter(expense => (
-        expense.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
+        expense.created.toLocaleString("en-US", { month: "long" }) === monthFilter
     ));
 
     return (
@@ -17,7 +15,7 @@ const ExpenseHistory = (props) => {
             {filteredExpenses.map((expense) => (                
                 <ExpenseItem
                     key={expense.id}
-                    date={expense.date}
+                    date={expense.created}
                     category={expense.category}
                     amount={expense.amount}
                     description={expense.description}

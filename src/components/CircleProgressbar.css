@@ -2,14 +2,18 @@
     color: rgba(128, 128, 128, 0.185);
 }
 
-.circularProgress1 .MuiCircularProgress-svg {
+.circularProgress1-g .MuiCircularProgress-svg {
     color: green;
+}
+
+.circularProgress1-r .MuiCircularProgress-svg {
+    color: red;
 }
 
 .MuiCircularProgress-root {
     position: relative;
 }
-.circularProgress1 {
+.circularProgress1-g, .circularProgress1-r {
     position: absolute;
 }
 

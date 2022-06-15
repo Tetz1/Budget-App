@@ -4,7 +4,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 import './DateSelector.css';
 
-function DateSelector(props) {
+function DateSelector({onFilteredMonth}) {
 
     const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,7 +21,7 @@ function DateSelector(props) {
         event.preventDefault();
 
         setMonthFilter(event.target.value);
-        props.onFilteredMonth(event.target.value);
+        onFilteredMonth(event.target.value);
     }
 
     return (

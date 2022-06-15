@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Axios from 'axios';
 
 import DateSelector from "../components/DateSelector";
 import ExpenseHistory from '../components/Expense/ExpenseHistory';
@@ -6,9 +7,33 @@ import TotalExpenses from '../components/Expense/TotalExpenses';
 
 import './Expenses.css';
 
-const Expenses = (props) => {
+const Expenses = ({expenses}) => {
+    const userToken = localStorage.getItem("user");
+    const [listOfExpenses, setListOfExpenses] = useState();
+    const call = "https://budgetapp.digitalcube.rs/api/transactions"
 
-    const expenses = props.expenses;
+    const fetchData = async () => {
+        try {
+            const response = await Axios.get(call, {
+                headers: {
+                    "Authorization": `Bearer ${userToken}`
+                }
+            })
+            console.log(response);
+
+            const data = response.transactions;
+            setListOfExpenses(data);
+            console.log(expenses);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [])
+
+
     const currMonth = new Date().toLocaleString("en-US", { month: "long" });
     const [filteredMonth, setFilteredMonth] = useState(currMonth);
 
@@ -30,6 +55,7 @@ const Expenses = (props) => {
 
 
     return (
+        // listOfExpenses?
         <div className="content">
             <div>
                 <img src="" alt="Logo" />
@@ -46,7 +72,7 @@ const Expenses = (props) => {
                 expenses={expenses}
                 monthFilter={filteredMonth}
             />
-        </div>
+        </div> //: <p>loading...</p>
     );
 }
 

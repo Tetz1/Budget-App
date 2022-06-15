@@ -2,11 +2,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import './CircleProgressbar.css';
 
-const CircleProgressbar = (props) => {
+const CircleProgressbar = ({totalExpenses, totalIncomes}) => {
 
-    const totalIncomes = props.totalIncomes;
-    const totalExpenses = props.totalExpenses;
-    const remainingBalance = (totalIncomes - totalExpenses).toFixed(2);
+    let remainingBalance = (totalIncomes - totalExpenses);
 
     let proportion;
     if (totalIncomes > 1) {
@@ -27,7 +25,7 @@ const CircleProgressbar = (props) => {
                 variant={"determinate"}
                 size={175}
                 thickness={3}
-                className={"circularProgress1"}
+                className={(proportion <= 25 ? "circularProgress1-r" : "circularProgress1-g")}
             />
             <CircularProgress
                 value={100}
