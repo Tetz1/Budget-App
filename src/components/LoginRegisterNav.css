@@ -2,7 +2,7 @@
     text-align: right;
 }
 
-button {
+.loginRegNav_btn {
     font-family: "Andale Mono", monospace;
     padding: 13px;
     padding-left: 20px;

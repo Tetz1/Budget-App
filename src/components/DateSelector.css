@@ -1,14 +1,10 @@
 .alignLeft {
-    text-align: left;
+    text-align: center;
 }
 
 .date {
-    float: left;
     position: relative;
     width: 50%;
-    margin-top: 50px;
-    margin-bottom: 100px;
-    text-align: center;
 }
 
 .drpdwnMenu {
@@ -17,4 +13,9 @@
     font-weight: bold;
     width: 160px;
     outline: none;
+}
+
+.currentDate {
+    color: gray;
+    margin-right: 5px;
 }

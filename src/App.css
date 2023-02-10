@@ -1,22 +1,22 @@
-.navbar {
-    bottom: 0;
-    position: sticky;
-    background-color: white;
-    overflow: auto;
-}
-
 .content {
-    overflow: scroll;
+    overflow: hidden;
     width: 100%;
+    padding: 0;
 }
 
 .cont {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
-    margin-top: 50px;
+    width: 85%;
 }
 
 #root {
-    height: 90vh;
+    height: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 0px;
+    display: grid;
+    grid-template-rows: 92% 8%;
 }
+
+  

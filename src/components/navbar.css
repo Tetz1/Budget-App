@@ -1,16 +1,21 @@
 .nav {
     color: black;
     width: 100%;
+    bottom: 0;
+    background-color: white;
+    overflow: hidden;
 }
 
 .nav ul {
     list-style: none;
     display: flex;
-    padding-left: 8.5%;
+    margin: 0;
+    margin-top: 1%;
 }
 
 .nav li {
     width: 20%;
+    text-align: center;
 }
 
 .nav .navlink {
@@ -18,8 +23,8 @@
     color: black;
     text-decoration: none;
     font-size: 17px;
-    text-align: center;
     background-color: white;
+    width: 100%;
 }
 
 .icon {
@@ -32,7 +37,7 @@
 
 @media only screen and (max-width: 600px) {
     .nav ul {
-        padding-left: 4%;
+        padding-left: 0;
     }
 
     .icon {

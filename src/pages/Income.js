@@ -1,75 +1,107 @@
 import { useState, useEffect } from "react";
 import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import TotalIncome from "../components/Income/TotalIncome";
 import DateSelector from "../components/DateSelector";
 import IncomeHistory from "../components/Income/IncomeHistory";
 
 import './Income.css';
-import { useParams } from "react-router-dom";
 
 const Income = ({incomes}) => {
 
     const userToken = localStorage.getItem("user");
     const [listOfIncomes, setListOfIncomes] = useState();
-    const call = "https://budgetapp.digitalcube.rs/api/transactions/statistics"
 
-    const fetchData = async () => {
-        try {
-            const response = await Axios.get(call, {
+    
+    useEffect(() => {
+        const callFetchData = "https://budgetapp.digitalcube.rs/api/transactions"
+
+        const FetchData = () => {
+            fetch(callFetchData, {
                 headers: {
-                    "Authorization": `Bearer ${userToken}`
-                },
-                params: {
-                    year: currDate.getFullYear(),
-                    month: currDate.getMonth() + 1
+                    Authorization: `Bearer ${userToken}`
                 }
             })
-            console.log(response);
+            .then(response => response.json())
+            .then(data => {
+                const transactions = data.transactions;
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        };
+        FetchData();
+    })
 
-            const {data} = response;
-            setListOfIncomes(data);
-            console.log(data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const currDate = new Date();
-    const currMonth = new Date().toLocaleString("en-US", { month: "long" });
+    const currMonth = new Date().getMonth() + 1;
     const [filteredMonth, setFilteredMonth] = useState(currMonth);
-
-    const filteredIncomes = incomes.filter(income => (
-        income.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
-    ));
-
-
-    // Get total expenses
-    let totalIncomes = 0;
-    filteredIncomes.map((income) => (
-        totalIncomes += parseFloat(income.amount)
-    ));
 
 
     const filteredMonthHandler = (month) => {
         setFilteredMonth(month);
     };
 
+
+    //Protected page, checks users token
+    const ProtectedPage = () => {
+        const [loading, setLoading] = useState(true);
+        const [isTokenValid, setIsTokenValid] = useState(false);
+        const navigate = useNavigate();
+        const callUserCheck = "https://budgetapp.digitalcube.rs/api/tenants/6c931dbf-ae44-4e90-9d7b-537ec6cea122/session";
+
+      
+        useEffect(() => {
+            if (!userToken) {
+                return navigate('/login');
+            } else {
+                fetch(callUserCheck, {
+                headers: {
+                Authorization: `Bearer ${userToken}`
+                }})
+                .then(response => {
+                    if (response.status === 200) {
+                        setLoading(false);
+                        setIsTokenValid(true);
+                    } else {
+                        return navigate('/login');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            }
+        }, [navigate]);
+      
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+      
+        if (!isTokenValid) {
+            return <div>Unauthorized</div>;
+        }
+      
+        return (
+            <div className="content_incomes-grid">
+                <div className="logo">
+                    <img src="" alt="Logo" />
+                </div>
+                <div className="cont">
+                    <TotalIncome filteredMonth={filteredMonth} />
+                    <div className="date-margin">
+                        <DateSelector onFilteredMonth={filteredMonthHandler} />
+                    </div>
+                </div>
+                <div className="history_text">History</div>
+                <div className="history-container">
+                    <IncomeHistory monthFilter={filteredMonth} />
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <div className="content">
-            <div className="logo">
-                <img src="" alt="Logo" />
-            </div>
-            <div className="cont">
-                <TotalIncome totalIncomes={totalIncomes} />
-                <DateSelector onFilteredMonth={filteredMonthHandler} />
-            </div>
-            <IncomeHistory incomes={incomes} monthFilter={filteredMonth} />
-        </div>
+        ProtectedPage()
     );
 };
 

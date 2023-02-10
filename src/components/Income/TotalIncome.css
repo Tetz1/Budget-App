@@ -1,15 +1,14 @@
-.card {
+.card_income {
     background-color: rgba(0, 133, 0, 0.164);
     border-radius: 15px;
     height: 60px;
     width: 100%;
+    display: grid;
+    grid-template-columns: 5% 25% 40% 25% 5%;
 }
 
 .box {
-    float: left;
-    width: 33.33%;
     padding-top: 10px;
-    padding-bottom: 10px;
 }
 
 .box2 {
@@ -18,13 +17,18 @@
 }
 
 .label {
-    font-size: 14px;
+    font-size: 13px;
+    text-align: left;
+    color: rgb(56, 56, 56);
 }
 
-.btn_redirect {
+.btn_addIncome {
     color: green;
 }
 
-.amount {
+.amount_income2 {
     color: green;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
 }

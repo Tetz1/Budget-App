@@ -1,15 +1,10 @@
-.card {
-    background-color: rgba(128, 128, 128, 0.185);
+.card_expense {
+    background-color: rgba(126, 126, 126, 0.158);
     border-radius: 15px;
-    width: 80%;
     height: 60px;
-}
-
-.box {
-    float: left;
-    width: 33.33%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 5% 25% 40% 25% 5%;
 }
 
 .box2 {
@@ -18,9 +13,18 @@
 }
 
 .label {
-    font-size: 14px;
+    font-size: 13px;
+    text-align: left;
+    color: rgb(56, 56, 56);
 }
 
-.btn_redirect {
+.btn_addExpense {
     color: black;
+}
+
+.amount_expense {
+    color: black;
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
 }

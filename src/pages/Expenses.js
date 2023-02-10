@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import DateSelector from "../components/DateSelector";
 import ExpenseHistory from '../components/Expense/ExpenseHistory';
@@ -7,46 +7,32 @@ import TotalExpenses from '../components/Expense/TotalExpenses';
 
 import './Expenses.css';
 
-const Expenses = ({expenses}) => {
+const Expenses = () => {
+
     const userToken = localStorage.getItem("user");
-    const [listOfExpenses, setListOfExpenses] = useState();
-    const call = "https://budgetapp.digitalcube.rs/api/transactions"
+    const callFetchData = "https://budgetapp.digitalcube.rs/api/transactions"
 
-    const fetchData = async () => {
-        try {
-            const response = await Axios.get(call, {
-                headers: {
-                    "Authorization": `Bearer ${userToken}`
-                }
-            })
-            console.log(response);
-
-            const data = response.transactions;
-            setListOfExpenses(data);
-            console.log(expenses);
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    const FetchData = () => {
+        fetch(callFetchData, {
+            headers: {
+                Authorization: `Bearer ${userToken}`
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const transactions = data.transactions;
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    };
 
     useEffect(() => {
-        fetchData();
-    }, [])
+        FetchData();
+    })
 
-
-    const currMonth = new Date().toLocaleString("en-US", { month: "long" });
+    const currMonth = new Date().getMonth() + 1;
     const [filteredMonth, setFilteredMonth] = useState(currMonth);
-
-    const filteredExpenses = expenses.filter(expense => (
-        expense.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
-    ));
-
-
-    // Get total expenses
-    let totalExpenses = 0;
-    filteredExpenses.map((expense) => (
-        totalExpenses += parseFloat(expense.amount)
-    ));
 
 
     const filteredMonthHandler = (month) => {
@@ -54,25 +40,71 @@ const Expenses = ({expenses}) => {
     };
 
 
+    const ProtectedPage = () => {
+        const [loading, setLoading] = useState(true);
+        const [isTokenValid, setIsTokenValid] = useState(false);
+        const navigate = useNavigate();
+        const callUserCheck = "https://budgetapp.digitalcube.rs/api/tenants/6c931dbf-ae44-4e90-9d7b-537ec6cea122/session";
+
+      
+        useEffect(() => {
+            if (!userToken) {
+                return navigate('/login');
+            } else {
+                fetch(callUserCheck, {
+                headers: {
+                Authorization: `Bearer ${userToken}`
+                }})
+                .then(response => {
+                    if (response.status === 200) {
+                        setLoading(false);
+                        setIsTokenValid(true);
+                    } else {
+                        return navigate('/login');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            }
+        }, [navigate]);
+      
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+      
+        if (!isTokenValid) {
+            return <div>Unauthorized</div>;
+        }
+      
+        return (
+            //listOfExpenses?
+            <div className="content_expenses-grid">
+                <div>
+                    <img src="" alt="Logo" />
+                </div>
+                <div className="cont">
+                    <TotalExpenses
+                        filteredMonth={filteredMonth}
+                    />
+                    <div className="date-margin">
+                        <DateSelector
+                            onFilteredMonth={filteredMonthHandler}
+                        />
+                    </div>
+                </div>
+                <div className="history_text">History</div>
+                <div className="history-container">
+                    <ExpenseHistory
+                        monthFilter={filteredMonth}
+                    />
+                </div>
+            </div> //: <p>loading...</p>
+        );
+    };
+
     return (
-        // listOfExpenses?
-        <div className="content">
-            <div>
-                <img src="" alt="Logo" />
-            </div>
-            <div className="cont">
-                <TotalExpenses
-                    totalExpenses={totalExpenses}
-                />
-                <DateSelector
-                    onFilteredMonth={filteredMonthHandler}
-                />
-            </div>
-            <ExpenseHistory
-                expenses={expenses}
-                monthFilter={filteredMonth}
-            />
-        </div> //: <p>loading...</p>
+        ProtectedPage()
     );
 }
 

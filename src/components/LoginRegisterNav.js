@@ -15,11 +15,11 @@ const LoginRegisterNav = () => {
 
   let classRegister, classLogin;
   if (window.location.pathname === "/login") {
-    classLogin = "active";
-    classRegister = "";
+    classLogin = "active loginRegNav_btn";
+    classRegister = "loginRegNav_btn";
   } else if (window.location.pathname === "/register"){
-    classLogin = "";
-    classRegister = "active";
+    classLogin = "loginRegNav_btn";
+    classRegister = "active loginRegNav_btn";
   }
 
   return (

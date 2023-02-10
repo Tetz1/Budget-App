@@ -3,10 +3,62 @@
     grid-template-columns: 20% 60% 20%;
 }
 
-.cont-all {
-    height: 100%;
+.grid-container-addIncome {
+    height: 90vh;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 5% 85%;
+    display: grid;
 }
 
 .logo {
     text-align: left;
+}
+
+.text_field {
+    border: none;
+    border-bottom: 1px solid gray;
+    width: 80vw;
+    height: 4vh;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    font-size: 15px;
+    color: gray;
+    background: none;
+    outline: none;
+}
+
+.head {
+    font-weight: bold;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.addIncome_btn {
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    width: 80%;
+    height: 50px;
+    font-size: 17px;
+}
+
+.addIncome_form {
+    position: relative;
+    height: 75vh;
+}
+
+.container-btn {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.goBack {
+    font-size: 30px;
+    color: black;
+    margin-top: auto;
+    margin-bottom: auto;
 }

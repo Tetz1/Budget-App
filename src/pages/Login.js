@@ -1,32 +1,42 @@
 import { useState } from 'react';
 import Axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
 import LoginRegisterNav from '../components/LoginRegisterNav';
 import "./loginRegister.css";
 
-const Login = (props) => {
+const Login = () => {
 
     const navigate = useNavigate();
-    const login_URL = "https://budgetapp.digitalcube.rs/api/tenants/ac56b8b9-3bdc-429f-ab64-7aedd16d8d25/sessions"
+    const callLogin = "https://budgetapp.digitalcube.rs/api/tenants/6c931dbf-ae44-4e90-9d7b-537ec6cea122/session"
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
 
-    const handleLogin = async e => {
-        e.preventDefault();
+    const handleLogin = async event => {
+        event.preventDefault();
 
-        try {
-            const response = await Axios.post(login_URL, 
-                JSON.stringify({username, password})
-            )
-            const {data} = response;
-
-            localStorage.setItem("user", data.token);
-
+        fetch(callLogin, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                "username": username,
+                "password": password
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const token = data.token;
+            localStorage.setItem("user", token);
             navigate("/", {replace: true});
-        } catch (error) {
+        })
+        .catch((error) => {
             if (!error.response) {
                 setErrorMsg("No Server Response");
             } else if (error.response?.status === 400) {
@@ -37,8 +47,10 @@ const Login = (props) => {
                 setErrorMsg("Login failed");
             }
             alert(errorMsg);
-        }
-
+            console.log(error);
+        });
+        
+        
         setUsername("");
         setPassword("");
     };

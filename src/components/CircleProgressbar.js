@@ -4,7 +4,7 @@ import './CircleProgressbar.css';
 
 const CircleProgressbar = ({totalExpenses, totalIncomes}) => {
 
-    let remainingBalance = (totalIncomes - totalExpenses);
+    let remainingBalance = (totalIncomes - totalExpenses).toFixed(2);
 
     let proportion;
     if (totalIncomes > 1) {

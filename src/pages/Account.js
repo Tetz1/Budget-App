@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Account() {
   
-    const call = "https://budgetapp.digitalcube.rs/api/tenants/ac56b8b9-3bdc-429f-ab64-7aedd16d8d25/sessions";
+    const call = "https://budgetapp.digitalcube.rs/api/tenants/6c931dbf-ae44-4e90-9d7b-537ec6cea122/sessions";
     const userToken = localStorage.getItem("user");
 
     const navigate = useNavigate();

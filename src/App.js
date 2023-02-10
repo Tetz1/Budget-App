@@ -10,6 +10,7 @@ import Expenses from './pages/Expenses';
 import Income from './pages/Income';
 import AddIncome from './pages/AddIncome';
 import Account from './pages/Account';
+import Savings from './pages/Savings';
 
 import './App.css';
 
@@ -21,88 +22,9 @@ import './App.css';
     Debts - a0fec36b-b872-4a0b-a88b-c5e1e822f740
 */
 
-
-const dummyExpenses = [
-    {
-        id: 1,
-        date: new Date(2022, 4, 1),
-        category: "Food",
-        amount: 62,
-        description: "Restaurant",
-        importancy: "Medium"
-    },
-    {
-        id: 2,
-        date: new Date(2022, 4, 10),
-        category: "Bills",
-        amount: 21.2,
-        description: "Light bill",
-        importancy: "High"
-    },
-    {
-        id: 3,
-        date: new Date(2022, 4, 21),
-        category: "Leisure",
-        amount: 150,
-        description: "Skydiving",
-        importancy: "Low"
-    },
-    {
-        id: 4,
-        date: new Date(2022, 5, 5),
-        category: "Debts",
-        amount: 2500,
-        description: "Car loan",
-        importancy: "High"
-    }
-];
-
-const dummyIncomes = [
-    {
-        id: 1,
-        date: new Date(2022, 5, 5),
-        description: "Salary",
-        amount: 5000
-    },
-    {
-        id: 2,
-        date: new Date(2022, 3, 5),
-        description: "Salary",
-        amount: 5000
-    },
-    {
-        id: 3,
-        date: new Date(2022, 4, 5),
-        description: "Salary",
-        amount: 3333
-    },
-    {
-        id: 4,
-        date: new Date(2022, 4, 5),
-        description: "Salary",
-        amount: 69420
-    }
-];
-
 const App = () => {
 
-    const [expenses, setExpenses] = useState(dummyExpenses);
-    const [incomes, setIncomes] = useState(dummyIncomes);
-    const [auth, setAuth] = useState();
-
-    const saveExpenseDataHandler = (expense) => {
-        setExpenses((prevExpenses) => {
-            return [expense, ...prevExpenses];
-        });
-    };
-
-    const saveIncomeDataHandler = (income) => {
-        setIncomes((prevIncomes) => {
-            return [income, ...prevIncomes];
-        });
-    };
-
-    const loggedIn = localStorage.getItem("user");
+    //const loggedIn = localStorage.getItem("user");
     
     return (
         <BrowserRouter>
@@ -112,37 +34,46 @@ const App = () => {
                     
                     <Route path="/" element={
                         <>
-                        <Home expenses={expenses} incomes={incomes} />
+                        <Home />
                         <Navbar />
                         </>
                     } />
                     <Route path="/expenses/add" element={
                         <>
-                        <AddExpenses onSaveExpenseData={saveExpenseDataHandler} />
+                        <AddExpenses />
                         <Navbar />
                         </>
                     } />
                     <Route path="/expenses" element={
                         <>
-                        <Expenses
-                            expenses={expenses}
-                        />
+                        <Expenses />
                         <Navbar />
                         </>
                     } />
                     <Route path="/income" element={
                         <>
-                        <Income incomes={incomes} />
+                        <Income />
                         <Navbar />
                         </>
                     } />
                     <Route path="/income/add" element={
                         <>
-                        <AddIncome onSaveIncomeData={saveIncomeDataHandler} />
+                        <AddIncome />
                         <Navbar />
                         </>
                     } />
-                    <Route path="/account" element={<Account  />} />
+                    <Route path="/account" element={
+                        <>
+                        <Account  />
+                        <Navbar />
+                        </>
+                    } />
+                    <Route path="/savings" element={
+                        <>
+                        <Savings  />
+                        <Navbar />
+                        </>
+                    } />
             </Routes>
         </BrowserRouter>
     );

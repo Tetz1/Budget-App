@@ -1,106 +1,125 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import DateSelector from '../components/DateSelector';
 import SummaryMoney from '../components/SummaryMoney';
 import CircleProgressbar from '../components/CircleProgressbar';
+import ExpenseCategories from '../components/ExpenseCategories';
 
 import './home.css';
 
-function Home(props) {
+function Home() {
 
-    const userToken = localStorage.getItem("user");
-    const currDate = new Date();
-    const [totalExpenses, setTotalExpenses] = useState();
-    const call_getTotalExpenses = "https://budgetapp.digitalcube.rs/api/transactions/statistics";
+  const userToken = localStorage.getItem("user");
 
-    const fetchData = async () => {
-        try {
-            const response = await Axios.get(call_getTotalExpenses, {
-                headers: {
-                    "Authorization": `Bearer ${userToken}`
-                },
-                params: {
-                    year: currDate.getFullYear(),
-                    month: currDate.getMonth() + 1
-                }
-            })
 
-            const {data} = response;
-            setTotalExpenses(data.outcome);
-        } catch (error) {
-            console.log(error);
+  const currMonth = new Date().getMonth() + 1;
+  const [filteredMonth, setFilteredMonth] = useState(currMonth);
+
+  const filteredMonthHandler = (month) => {
+    setFilteredMonth(month);
+  };
+
+
+  const [totalExpenses, setTotalExpenses] = useState();
+  const [totalIncomes, setTotalIncomes] = useState();
+  const [expensesByCategory, setExpensesByCategory] = useState();
+
+  const callFetchData = "https://budgetapp.digitalcube.rs/api/transactions/statistics?year="+new Date().getFullYear()+"&month="+filteredMonth;
+  const callUserCheck = "https://budgetapp.digitalcube.rs/api/tenants/6c931dbf-ae44-4e90-9d7b-537ec6cea122/session";
+
+
+  
+
+  useEffect(() => {
+    const FetchTotalIncomes = () => {
+      fetch(callFetchData, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${userToken}`
         }
+      })
+      .then(response => response.json())
+      .then(data => {
+        setTotalIncomes(data.income);
+        setTotalExpenses(data.outcome);
+        setExpensesByCategory(data.by_category);
+      })
+      .catch(error => {
+        console.error(error);
+      })
     }
+    FetchTotalIncomes();
+  }, [filteredMonth])
 
+
+  
+  const ProtectedPage = () => {
+    const [username, setUsername] = useState();
+    const [loading, setLoading] = useState(true);
+    const [isTokenValid, setIsTokenValid] = useState(false);
+    const navigate = useNavigate();
+  
     useEffect(() => {
-        fetchData();
-    }, []);
-
-
-
-
-    let navigate = useNavigate();
-    const LoggedIn = localStorage.getItem("user");
-
-    const expenses = props.expenses;
-    const incomes = props.incomes;
-
-    const currMonth = new Date().toLocaleString("en-US", { month: "long" });
-    const [filteredMonth, setFilteredMonth] = useState(currMonth);
-
-    const filteredMonthHandler = (month) => {
-        setFilteredMonth(month);
-    };
-
-
-    // To get the total expenses
-    const filteredExpenses = expenses.filter(expense => (
-        expense.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
-    ));
-    
-    let totalExpenses1 = 0;
-    filteredExpenses.map((expense) => (
-        totalExpenses1 += parseFloat(expense.amount)
-    ));
-
-
-    // To get the total incomes
-    const filteredIncomes = incomes.filter(income => (
-        income.date.toLocaleString("en-US", { month: "long" }) === filteredMonth
-    ));
-    
-    let totalIncomes = 0;
-    filteredIncomes.map((income) => (
-        totalIncomes += parseFloat(income.amount)
-    ));
-
-
-    useEffect(() => {
-       if (!LoggedIn){
-          return navigate("/login");
-       } 
-    },[LoggedIn]);
-
+      if (!userToken) {
+        return navigate('/login');
+      } else {
+        fetch(callUserCheck, {
+          headers: {
+            Authorization: `Bearer ${userToken}`
+          }
+        })
+        .then(response => {
+          if (response.status === 200) {
+            setLoading(false);
+            setIsTokenValid(true);
+          } else {
+            return navigate('/login');
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      }
+    }, [navigate]);
+  
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+  
+    if (!isTokenValid) {
+      return <div>Unauthorized</div>;
+    }
+  
     return (
-        <div className="content">
-            <div className="logo">
-                <img src="" alt="Logo" />
-            </div>
-            <div className="welcome">
-                Hello, {}
-            </div>
-            <div className="dateSelector">
-                <DateSelector onFilteredMonth={filteredMonthHandler} />
-            </div>
-            <div className="summaryMoney">
-                <SummaryMoney totalExpenses={totalExpenses} totalIncomes={totalIncomes.toFixed(2)} />
-            </div>
-            <CircleProgressbar totalIncomes={totalIncomes} totalExpenses={totalExpenses} />
+      <div className="content_home-grid">
+        <div className="logo">
+          <img src="" alt="Logo" />
         </div>
+        <div className="welcome">
+          Hello, {username}
+        </div>
+        <div className="dateSelector">
+          <DateSelector onFilteredMonth={filteredMonthHandler} />
+        </div>
+        <div className="summaryMoney">
+          <SummaryMoney totalExpenses={totalExpenses} totalIncomes={totalIncomes} />
+        </div>
+        <CircleProgressbar totalIncomes={totalIncomes} totalExpenses={totalExpenses} />
+        <div>
+          Expense categories
+        </div>
+        <ExpenseCategories
+        />
+      </div>
     );
+  };
+
+
+  return (
+    ProtectedPage()
+  )
 };
 
 export default Home;

@@ -1,7 +1,7 @@
 import { MdFastfood } from 'react-icons/md';
 import { RiBillFill } from 'react-icons/ri';
 import { BiDrink } from 'react-icons/bi';
-import { FcDebt } from 'react-icons/fc';
+import { GiTakeMyMoney } from 'react-icons/gi';
 import { FaCircle } from 'react-icons/fa';
 
 import './ExpenseItem.css';
@@ -13,22 +13,22 @@ const ExpenseItem = (props) => {
     const expenseDescription = props.description;
     const expenseCategory = props.category;
     const expenseAmount = props.amount;
-    const expenseImportancy = props.importancy;
+    //const expenseImportancy = props.importancy;
 
     const setCategoryIcon = () => {
         switch (expenseCategory) {
-            case "Food":
+            case "783cd8bf-5d2a-4159-b889-4980601e4d37":
                 return <MdFastfood className="icon_food" />
-            case "Bills":
+            case "f51559db-61f4-4432-b8ad-660b58cb5d0c":
                 return <RiBillFill className="icon_bills" />
-            case "Leisure":
+            case "8699d2dd-7e37-4a54-9411-1ff0433ce782":
                 return <BiDrink className="icon_leisure" />
-            case "Debts":
-                return <FcDebt className="icon_debts" />
+            case "f9686fe2-0528-42ee-b882-9b6bb6a85048":
+                return <GiTakeMyMoney className="icon_debts" />
         };
     };
 
-    const setImportancyIcon = () => {
+    /*const setImportancyIcon = () => {
         switch (expenseImportancy) {
             case "Low":
                 return (
@@ -52,7 +52,7 @@ const ExpenseItem = (props) => {
                     </>
                 )
         };
-    };
+    };*/
 
     return (
         <div className="containerExp">
@@ -71,7 +71,8 @@ const ExpenseItem = (props) => {
                 </div>
             </div>
             <div className="cellExp">
-                <div className="importancy">{setImportancyIcon()}</div>
+                {//<div className="importancy">{setImportancyIcon()}</div>
+}
             </div>
         </div>
     );

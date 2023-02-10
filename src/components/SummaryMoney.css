@@ -26,11 +26,14 @@
 
 .budgetAmount {
     color: green;
-}
-
-.amount {
     font-size: 20px;
     font-weight: bold;
+}
+
+.expenseAmount {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
 }
 
 .totalGroup {

@@ -1,0 +1,14 @@
+.content_expenses-grid {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 11% 26% 3% 60%;
+}
+
+.date-margin {
+    margin-top: 37px;
+}
+
+.history_text {
+    text-align: left;
+    margin-left: 8%;
+}

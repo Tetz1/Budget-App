@@ -1,6 +1,11 @@
-.content {
-    margin: auto;
-    width: 90%;
-    height: 90vh;
-    display: block;
+.content_incomes-grid {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 11% 26% 3% 60%;
+}
+
+.history-container {
+    overflow-y: scroll;
+    width: 100%;
+    height: 90%;
 }

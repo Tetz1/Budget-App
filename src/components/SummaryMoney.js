@@ -14,7 +14,7 @@ const SummaryMoney = ({totalExpenses, totalIncomes}) => {
             </div>
             <div className="totalExpenses">
                 <div className="title">Total expenses</div>
-                <div className="amount">€{totalExpenses}</div>
+                <div className="expenseAmount">€{totalExpenses}</div>
             </div>
         </div>
     );

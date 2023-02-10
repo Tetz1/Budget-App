@@ -1,20 +1,82 @@
+.grid-container-addExpense {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 10% 5% 85%;
+}
+
 .slider {
     color: green;
 }
 
-.btn {
+.grid-container {
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+}
+
+.addExpense_btn {
     background-color: green;
     color: white;
     border: none;
     border-radius: 15px;
-    width: 25vw;
-    height: 55px;
+    width: 80%;
+    height: 50px;
     font-size: 17px;
-    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-@media only screen and (max-width: 600px) {
-    .btn {
-        width: 80vw;
-    }
+.txt-form_titles {
+    text-align: left;
+    font-weight: bold;
+    margin-left: 8%;
+}
+
+.addExpense_form-grid {
+    display: grid;
+    grid-template-rows: 25% 45% 20% 10%;
+}
+
+.grid-radio_category {
+    display: grid;
+    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-columns: 25% 55% 20%;
+    height: 80%;
+}
+
+.icon-format {
+    font-size: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.radio_btn {
+    height: 25px;
+    width: 25px;
+    color: green;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slider-importancy {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.description_radio {
+    font-size: 12px;
+    text-align: left;
+    color: rgb(102, 102, 102);
+}
+
+.category_and_description {
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.category-lbl {
+
 }
